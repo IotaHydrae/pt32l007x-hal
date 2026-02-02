@@ -1,0 +1,131 @@
+name: PT32x007x
+generated_from_pack: true
+pack_file_release: 1.6.0
+variants:
+        - name: PT32F007F6P7
+          cores:
+                  - name: main
+                    type: armv6m
+                    core_access_options: !Arm
+                            ap: !v1 0
+          memory_map:
+                  - !Nvm
+                    name: IROM
+                    range:
+                            start: 0x0
+                            end: 0x8000
+                    cores:
+                            - main
+                    access:
+                            write: false
+                            boot: true
+                  - !Ram
+                    name: IRAM
+                    range:
+                            start: 0x20000000
+                            end: 0x20002000
+                    cores:
+                            - main
+          flash_algorithms:
+                  - pt32l007x8x7_1.1
+        - name: PT32F007F8P7
+          cores:
+                  - name: main
+                    type: armv6m
+                    core_access_options: !Arm
+                            ap: !v1 0
+          memory_map:
+                  - !Nvm
+                    name: IROM
+                    range:
+                            start: 0x0
+                            end: 0x10000
+                    cores:
+                            - main
+                    access:
+                            write: false
+                            boot: true
+                  - !Ram
+                    name: IRAM
+                    range:
+                            start: 0x20000000
+                            end: 0x20004000
+                    cores:
+                            - main
+          flash_algorithms:
+                  - pt32l007x8x7_1.1
+        - name: PT32L007F6xx
+          cores:
+                  - name: main
+                    type: armv6m
+                    core_access_options: !Arm
+                            ap: !v1 0
+          memory_map:
+                  - !Nvm
+                    name: IROM
+                    range:
+                            start: 0x0
+                            end: 0x8000
+                    cores:
+                            - main
+                    access:
+                            write: false
+                            boot: true
+                  - !Ram
+                    name: IRAM
+                    range:
+                            start: 0x20000000
+                            end: 0x20002000
+                    cores:
+                            - main
+          flash_algorithms:
+                  - pt32l007x8x7_1.1
+        - name: PT32L007F8xx
+          cores:
+                  - name: main
+                    type: armv6m
+                    core_access_options: !Arm
+                            ap: !v1 0
+          memory_map:
+                  - !Nvm
+                    name: IROM
+                    range:
+                            start: 0x0
+                            end: 0x10000
+                    cores:
+                            - main
+                    access:
+                            write: false
+                            boot: true
+                  - !Ram
+                    name: IRAM
+                    range:
+                            start: 0x20000000
+                            end: 0x20004000
+                    cores:
+                            - main
+          flash_algorithms:
+                  - pt32l007x8x7_1.1
+flash_algorithms:
+        - name: pt32l007x8x7_1.1
+          description: PT32L007x8x7
+          default: true
+          instructions: AOBAHgAo/NFwRwNGACBwRwFGACBwR0AgAQaIYgAgyGAnSAhgAL8BIIAHQGgEIQhAACj40AQgAQdIYAAgcEcBRkAgAgaQYgAGwWAdSIAeEGAAvwEggAdAaAIiEEAAKPjQAiBCB1BgACBwRxC1A0ZAIAQGoGLIHIEIiQAX4AEggAfDYAEkpAcQaCBhDUgAHyBgAL8BIIAHQGjAB8APACj40AEghAdgYBsdEh0JHwAp5dEAIBC9ACBwRwNGACBwRwAAJQHrrQAAAAAAAFctAAC0WAAA8mMAAEncAAC9WQAAoTcAAPBLAADDcQ==
+          pc_init: 0xb
+          pc_uninit: 0x11
+          pc_program_page: 0x6b
+          pc_erase_sector: 0x3f
+          pc_erase_all: 0x17
+          data_section_offset: 0xc4
+          # rtt_poll_interval: 0
+          flash_properties:
+                  address_range:
+                          start: 0x0
+                          end: 0x10000
+                  page_size: 0x200
+                  erased_byte_value: 0xff
+                  program_page_timeout: 500
+                  erase_sector_timeout: 500
+                  sectors:
+                          - size: 0x200
+                            address: 0x0
