@@ -1,6 +1,6 @@
 use core::convert::Infallible;
 use core::marker::PhantomData;
-use embedded_hal::digital::{ErrorType, OutputPin, PinState};
+use embedded_hal::digital::{ErrorType, InputPin, OutputPin, PinState};
 use paste::paste;
 use pt32l007x_pac::{GPIOA, GPIOB, GPIOC, GPIOD};
 
@@ -66,6 +66,38 @@ macro_rules! define_pins {
                             PinState::Low => self.set_low(),
                             PinState::High => self.set_high(),
                         }
+                    }
+                }
+
+                impl $PinName<gpio::Input> {
+                    pub fn into_pull_up_input() -> Self {
+                        /* Port x pin y output disable */
+                        $Peripheral.oec().write(|w| w.[<set_io $N>](true));
+
+                        /* Port x pin y input pull-up enable */
+                        $Peripheral.pus().modify(|f| f.[<set_io $N>](true));
+
+                        Self { _mode: PhantomData }
+                    }
+
+                    pub fn into_pull_down_input() -> Self {
+                        $Peripheral.oec().write(|w| w.[<set_io $N>](true));
+                        $Peripheral.pds().modify(|f| f.[<set_io $N>](true));
+                        Self { _mode: PhantomData }
+                    }
+                }
+
+                impl ErrorType for $PinName<gpio::Input> {
+                    type Error = Infallible;
+                }
+
+                impl InputPin for $PinName<gpio::Input> {
+                    fn is_high(&mut self) -> Result<bool, Self::Error> {
+                        Ok($Peripheral.dr().read().[<dr $N>]())
+                    }
+
+                    fn is_low(&mut self) -> Result<bool, Self::Error> {
+                        Ok(!self.is_high()?)
                     }
                 }
             } /* paste! */
