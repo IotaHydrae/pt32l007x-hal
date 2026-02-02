@@ -95,6 +95,14 @@ macro_rules! define_pins {
                         $Peripheral.pds().modify(|f| f.[<set_io $N>](true));
                         Self { _mode: PhantomData }
                     }
+
+                    pub fn enable_schmitt_trig(&mut self) {
+                        $Peripheral.css().modify(|f| f.[<set_io $N>](true));
+                    }
+
+                    pub fn disable_schmitt_trig(&mut self) {
+                        $Peripheral.csc().write(|w| w.[<set_io $N>](true));
+                    }
                 }
 
                 impl ErrorType for $PinName<gpio::Input> {
