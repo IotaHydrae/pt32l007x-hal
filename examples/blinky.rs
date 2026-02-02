@@ -12,12 +12,15 @@ fn main() -> ! {
     let mut delay = Delay::default();
 
     let mut led = pins::PD2::into_push_pull_output();
+    let mut led2 = pins::PD3::into_push_pull_output();
 
     loop {
         led.set_high();
+        led2.set_high();
         delay.delay_ms(500);
 
         led.set_low();
+        led2.set_low();
         delay.delay_ms(500);
     }
 }

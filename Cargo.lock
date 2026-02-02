@@ -202,6 +202,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "paste"
+version = "1.0.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
+
+[[package]]
 name = "proc-macro-error-attr2"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -244,6 +250,7 @@ dependencies = [
  "embedded-hal 1.0.0",
  "fugit",
  "panic-probe",
+ "paste",
  "pt32l007x-pac",
  "semihosting",
 ]

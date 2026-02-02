@@ -15,6 +15,7 @@ panic-probe = { version = "1.0", features = ["print-defmt"] }
 semihosting = "0.1.20"
 pt32l007x-pac = { version = "0.1.0", path = "../pt32l007x-pac" }
 fugit = "0.3.9"
+paste = "1.0.15"
 
 [dev-dependencies]
 defmt-test = "0.3"
