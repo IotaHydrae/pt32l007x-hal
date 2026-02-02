@@ -3,7 +3,7 @@
 
 use embedded_hal::{
     delay::DelayNs,
-    digital::{InputPin, OutputPin},
+    digital::{InputPin, StatefulOutputPin},
 };
 use pt32l007x_hal::{self as _, delay::Delay, pins};
 
@@ -19,13 +19,11 @@ fn main() -> ! {
     let mut count: u32 = 0;
 
     loop {
-        led.set_high();
-
         if button.is_low().unwrap() {
             defmt::println!("button pressed! {}", count);
             count = count.saturating_add(1);
 
-            led.set_low();
+            led.toggle();
         }
 
         delay.delay_ms(180);

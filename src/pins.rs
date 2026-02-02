@@ -1,6 +1,6 @@
 use core::convert::Infallible;
 use core::marker::PhantomData;
-use embedded_hal::digital::{ErrorType, InputPin, OutputPin, PinState};
+use embedded_hal::digital::{ErrorType, InputPin, OutputPin, PinState, StatefulOutputPin};
 use paste::paste;
 use pt32l007x_pac::{GPIOA, GPIOB, GPIOC, GPIOD};
 
@@ -66,6 +66,16 @@ macro_rules! define_pins {
                             PinState::Low => self.set_low(),
                             PinState::High => self.set_high(),
                         }
+                    }
+                }
+
+                impl StatefulOutputPin for $PinName<gpio::Output> {
+                    fn is_set_high(&mut self) -> Result<bool, Self::Error> {
+                        Ok($Peripheral.dr().read().[<dr $N>]())
+                    }
+
+                    fn is_set_low(&mut self) -> Result<bool, Self::Error> {
+                        Ok(!self.is_set_high()?)
                     }
                 }
 
