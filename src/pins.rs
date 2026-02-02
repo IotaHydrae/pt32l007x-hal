@@ -20,7 +20,28 @@ macro_rules! define_pins {
 
                 impl $PinName<gpio::Output> {
                     pub fn into_push_pull_output() -> Self {
+                        /* Port x pin y output enable */
                         $Peripheral.oes().modify(|f| f.[<set_io $N>](true));
+
+                        /* Port x pin y output open-drain disable */
+                        $Peripheral.odc().write(|w| w.[<set_io $N>](true));
+
+                        /* The bit on GPIOx_DR will enable its P-MOS (push-pull) */
+                        $Peripheral.dr().modify(|f| f.[<set_dr $N>](true));
+                        Self { _mode: PhantomData }
+                    }
+
+                    pub fn into_open_drain_output() -> Self {
+                        $Peripheral.oes().modify(|f| f.[<set_io $N>](true));
+
+                        /* Port x pin y output open-drain enable */
+                        $Peripheral.ods().write(|w| w.[<set_io $N>](true));
+
+                        /* The bit on the (GPIOx_DR register) puts the port in
+                         * a high-impedance state (PMOS is never turned on).
+                         */
+                        $Peripheral.dr().modify(|f| f.[<set_dr $N>](true));
+
                         Self { _mode: PhantomData }
                     }
                 }
@@ -47,8 +68,7 @@ macro_rules! define_pins {
                         }
                     }
                 }
-
-            }
+            } /* paste! */
         )*
     };
 }
