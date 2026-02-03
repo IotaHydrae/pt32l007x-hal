@@ -28,7 +28,7 @@
 
 This repository only includes examples suitable for the PT32L007F8P7K board.
 
-![board](./assets/board.png)
+![PT32L007F8P7K](./assets/board.png)
 
 Before trying any of the examples, please ensure you have the latest stable version of Rust installed, along with the right target support:
 
@@ -70,12 +70,20 @@ Alternatively, follow the installation instructions on https://probe.rs/.
 
 ```toml
 [target.thumbv6m-none-eabi]
-runner = "probe-rs run --chip RP2040"
+runner = [
+  "probe-rs",
+  "run",
+  "--chip-description-path",
+  "PT32x007x.yaml",
+  "--chip",
+  "PT32F007F8P7",
+  "--log-format=oneline",
+]
 ```
 
 *Step 3* - Connect your USB JTAG/debug probe (such as a Raspberry Pi Pico
 running [this firmware](https://github.com/majbthrd/DapperMime)) to the SWD
-programming pins on your RP2040 board. Check the probe has been found by
+programming pins on your PT32L007F8P7K board. Check the probe has been found by
 running:
 
 ```console
@@ -95,6 +103,8 @@ connected to the PT32L007x.
 ```bash
 cargo run --release --example blinky
 ```
+
+If everything goes well, you should see the LED blinking.
 
 ## Roadmap
 
